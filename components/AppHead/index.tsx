@@ -12,7 +12,7 @@ export function AppHead() {
       />
       <meta name="description" content="Description" />
       <meta name="keywords" content="Keywords" />
-      <title>Next.js PWA Example</title>
+      <title>Pomo!</title>
 
       <link rel="manifest" href="/manifest.json" />
       <link
