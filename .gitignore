@@ -12,7 +12,7 @@
 /.next/
 /out/
 public/sw.js
-public/sw.map.js
+public/sw.js.map
 
 # production
 /build
@@ -30,3 +30,4 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
