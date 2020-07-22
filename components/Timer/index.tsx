@@ -14,6 +14,8 @@ export function Timer() {
   const [timeLeft, setTimeLeft] = useState<moment.Duration>(null);
   const [expires, setExpires] = useState<moment.Moment>(null);
 
+  const timerStarted = expires !== null;
+
   useEffect(() => {
     const timerInterval = setInterval(() => {
       if (expires) {
@@ -41,7 +43,7 @@ export function Timer() {
       <Button
         rounded={true}
         size="large"
-        text="Hello"
+        text={timerStarted ? 'Reset' : 'Start'}
         color="primary"
         onClick={() => {
           startTimer();

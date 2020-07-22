@@ -5,9 +5,7 @@ export default function Home() {
     <>
       <section className="hero is-medium is-primary">
         <div className="hero-body">
-          <h1 className="is-size-1 has-text-centered">
-            Welcome to <a href="https://nextjs.org">Next.js!</a>
-          </h1>
+          <h1 className="is-size-1 has-text-centered">Pomo!</h1>
         </div>
       </section>
 
