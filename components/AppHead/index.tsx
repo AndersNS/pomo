@@ -1,6 +1,6 @@
-import Head from "next/head";
+import Head from 'next/head';
 
-export default function AppHead() {
+export function AppHead() {
   return (
     <Head>
       <title>Create Next App</title>

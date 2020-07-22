@@ -5,13 +5,7 @@ interface Props {
   rounded?: boolean;
   onClick: Function;
 }
-export default function Button({
-  text,
-  color: style,
-  size,
-  rounded,
-  onClick,
-}: Props) {
+export function Button({ text, color: style, size, rounded, onClick }: Props) {
   const s = size ? size : 'normal';
   const r = rounded ? 'is-rounded' : '';
   return (

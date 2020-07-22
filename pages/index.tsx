@@ -1,6 +1,6 @@
-import Button from '../components/Button/Button';
 import { useState, useEffect } from 'react';
 import moment from 'moment';
+import { Button } from '../components';
 
 const calculateTimeLeft = (expires: moment.Moment) => {
   const now = moment();

@@ -1,5 +1,5 @@
-import "../styles/style.scss";
-import AppHead from "../components/AppHead";
+import '../styles/style.scss';
+import { AppHead } from '../components';
 
 export default function MyApp({ Component, pageProps }) {
   return (
