@@ -1,6 +1,7 @@
 import moment from 'moment';
 import { useState, useEffect } from 'react';
 import { Button } from '..';
+import * as workerTimers from 'worker-timers';
 
 interface Props {
   focusLength: number;
@@ -26,9 +27,9 @@ export function Timer({ focusLength, onTimerEnd }: Props) {
   const lengthDuration = moment.duration(focusLength, 'minutes');
 
   useEffect(() => {
-    let timerInterval: NodeJS.Timeout;
+    let timerInterval: number;
     if (expires && !paused) {
-      timerInterval = setInterval(() => {
+      timerInterval = workerTimers.setInterval(() => {
         if (expires.isSameOrBefore(moment())) {
           setTimeLeft(null);
           onTimerEnd('Timer ended');
@@ -40,7 +41,7 @@ export function Timer({ focusLength, onTimerEnd }: Props) {
     }
     return () => {
       if (timerInterval) {
-        clearInterval(timerInterval);
+        workerTimers.clearInterval(timerInterval);
       }
     };
   }, [expires, paused]);
