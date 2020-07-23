@@ -1,16 +1,23 @@
 import '../styles/style.scss';
-import { AppHead } from '../components';
-import { useEffect } from 'react';
+import { AppHead, Modal, Button } from '../components';
+import { useEffect, useState } from 'react';
+
+const getWorkbox = () => {
+  if (
+    typeof window !== 'undefined' &&
+    'serviceWorker' in navigator &&
+    window.workbox !== undefined
+  ) {
+    return window.workbox;
+  }
+  return null;
+};
 
 export default function MyApp({ Component, pageProps }) {
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
   useEffect(() => {
-    if (
-      typeof window !== 'undefined' &&
-      'serviceWorker' in navigator &&
-      window.workbox !== undefined
-    ) {
-      const wb = window.workbox;
-
+    const wb = getWorkbox();
+    if (wb) {
       // add event listeners to handle any of PWA lifecycle event
       // https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-window.Workbox#events
       wb.addEventListener('installed', (event) => {
@@ -35,22 +42,14 @@ export default function MyApp({ Component, pageProps }) {
         // `event.wasWaitingBeforeRegister` will be false if this is the first time the updated service worker is waiting.
         // When `event.wasWaitingBeforeRegister` is true, a previously updated service worker is still waiting.
         // You may want to customize the UI prompt accordingly.
-        if (
-          confirm(
-            'A newer version of this web app is available, reload to update?',
-          )
-        ) {
-          wb.addEventListener('controlling', (_event) => {
-            window.location.reload();
-          });
-
-          // Send a message to the waiting service worker, instructing it to activate.
-          wb.messageSW({ type: 'SKIP_WAITING' });
-        } else {
-          console.log(
-            'User rejected to reload the web app, keep using old verion. New verion will be automatically load when user open the app next time.',
-          );
+        if (process.env.NODE_ENV !== 'production') {
+          return;
         }
+
+        wb.addEventListener('controlling', (_event) => {
+          window.location.reload();
+        });
+        setShowUpdateModal(true);
       };
 
       wb.addEventListener('waiting', promptNewVersionAvailable);
@@ -59,8 +58,50 @@ export default function MyApp({ Component, pageProps }) {
       wb.register();
     }
   });
+
+  const onUpdate = () => {
+    const wb = getWorkbox();
+    if (!wb) {
+      console.log('Could not get workbox in onUpdate');
+      return;
+    }
+
+    // Send a message to the waiting service worker, instructing it to activate.
+    wb.messageSW({ type: 'SKIP_WAITING' });
+    setShowUpdateModal(false);
+  };
+
+  const onIgnoreUpdate = () => {
+    console.log(
+      'User rejected to reload the web app, keep using old verion. New verion will be automatically load when user open the app next time.',
+    );
+
+    setShowUpdateModal(false);
+  };
   return (
     <>
+      <Modal isActive={showUpdateModal} onClose={onIgnoreUpdate}>
+        <div className="box is-4by3">
+          <p>A new update for Pomo! is available! Do you want to update now?</p>
+          <div className="has-text-centered mt-4">
+            <Button
+              text="Update now!"
+              color="primary"
+              onClick={() => {
+                onUpdate();
+              }}
+            />
+            <Button
+              className="ml-2"
+              text="Ignore"
+              color="secondary"
+              onClick={() => {
+                onIgnoreUpdate();
+              }}
+            />
+          </div>
+        </div>
+      </Modal>
       <AppHead />
       <div className="wrapper">
         <main className="site-content">
