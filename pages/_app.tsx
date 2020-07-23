@@ -60,6 +60,23 @@ export default function MyApp({ Component, pageProps }) {
     }
   });
 
+  useEffect(() => {
+    if ('Notification' in window) {
+      Notification.requestPermission((res) => {
+        switch (res) {
+          case 'granted':
+            console.log('Granted!');
+            break;
+          case 'denied':
+            console.log('Notification access denied');
+            break;
+          default:
+            console.log('Ignored notification access request');
+        }
+      });
+    }
+  });
+
   const onUpdate = () => {
     const wb = getWorkbox();
     if (!wb) {

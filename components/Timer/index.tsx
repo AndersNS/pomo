@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import { Button } from '..';
 
 interface Props {
-  length: number;
+  focusLength: number;
+  onTimerEnd: (message: string) => void;
 }
 
 const calculateTimeLeft = (expires: moment.Moment) => {
@@ -15,14 +16,14 @@ const calculateTimeLeft = (expires: moment.Moment) => {
   return duration;
 };
 
-export function Timer({ length }: Props) {
+export function Timer({ focusLength, onTimerEnd }: Props) {
   const [timeLeft, setTimeLeft] = useState<moment.Duration>(null);
   const [expires, setExpires] = useState<moment.Moment>(null);
   const [paused, setPaused] = useState(false);
 
   const timerStarted = timeLeft !== null;
 
-  const lengthDuration = moment.duration(length, 'minutes');
+  const lengthDuration = moment.duration(focusLength, 'minutes');
 
   useEffect(() => {
     let timerInterval: NodeJS.Timeout;
@@ -30,6 +31,7 @@ export function Timer({ length }: Props) {
       timerInterval = setInterval(() => {
         if (expires.isSameOrBefore(moment())) {
           setTimeLeft(null);
+          onTimerEnd('Timer ended');
         } else {
           const left = calculateTimeLeft(expires);
           setTimeLeft(left);
@@ -85,7 +87,7 @@ export function Timer({ length }: Props) {
           className="mt-5"
           rounded={true}
           size="large"
-          text={`${length} minute focus`}
+          text={`${focusLength} minute focus`}
           color="primary"
           onClick={() => {
             startTimer();

@@ -1,6 +1,13 @@
 import { Timer } from '../components';
 import { useState } from 'react';
 
+const showNotification = (message: string) => {
+  console.log('Showing notification');
+  navigator.serviceWorker.ready.then((reg) => {
+    reg.showNotification(message);
+  });
+};
+
 export default function Home() {
   const [config, setConfig] = useState({
     focusLength: 20,
@@ -19,7 +26,10 @@ export default function Home() {
       <div className="container mt-2">
         <main className="columns">
           <section className="column has-text-centered">
-            <Timer length={config.focusLength} />
+            <Timer
+              focusLength={config.focusLength}
+              onTimerEnd={(message) => showNotification(message)}
+            />
           </section>
         </main>
       </div>
