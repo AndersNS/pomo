@@ -43,7 +43,7 @@ export function Timer() {
       <Button
         rounded={true}
         size="large"
-        text={timerStarted ? 'Reset' : 'Start'}
+        text={timerStarted ? 'Restart' : 'Start'}
         color="primary"
         onClick={() => {
           startTimer();
