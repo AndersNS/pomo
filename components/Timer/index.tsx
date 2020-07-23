@@ -2,6 +2,10 @@ import moment from 'moment';
 import { useState, useEffect } from 'react';
 import { Button } from '..';
 
+interface Props {
+  length: number;
+}
+
 const calculateTimeLeft = (expires: moment.Moment) => {
   const now = moment();
 
@@ -10,15 +14,19 @@ const calculateTimeLeft = (expires: moment.Moment) => {
 
   return duration;
 };
-export function Timer() {
+
+export function Timer({ length }: Props) {
   const [timeLeft, setTimeLeft] = useState<moment.Duration>(null);
   const [expires, setExpires] = useState<moment.Moment>(null);
+  const [paused, setPaused] = useState(false);
 
-  const timerStarted = expires !== null;
+  const timerStarted = timeLeft !== null;
+
+  const lengthDuration = moment.duration(length, 'minutes');
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
-      if (expires) {
+      if (expires && !paused) {
         if (expires.isSameOrBefore(moment())) {
           setTimeLeft(null);
         } else {
@@ -31,32 +39,93 @@ export function Timer() {
     return () => {
       clearInterval(timerInterval);
     };
-  }, [expires]);
+  }, [expires, paused]);
 
   const startTimer = () => {
-    const expires = moment().add(19, 'minutes').add(59, 'seconds');
+    const expires = moment().add(lengthDuration).subtract(1, 'second');
+
     setExpires(expires);
     setTimeLeft(calculateTimeLeft(expires));
   };
   return (
     <>
-      <Button
-        rounded={true}
-        size="large"
-        text={timerStarted ? 'Restart' : 'Start'}
-        color="primary"
-        onClick={() => {
-          startTimer();
-        }}
-      />
-      {timeLeft ? <Timeleft timeLeft={timeLeft} /> : null}
+      {timerStarted ? (
+        <>
+          <Timeleft timeLeft={timeLeft} lengthDuration={lengthDuration} />
+          <div>
+            <Button
+              width="60%"
+              rounded={true}
+              size="large"
+              text="Restart"
+              color="primary"
+              onClick={() => {
+                startTimer();
+              }}
+            />
+          </div>
+          <div>
+            <Button
+              width="60%"
+              className="mt-2"
+              rounded={true}
+              size="large"
+              text={paused ? 'Unpause' : 'Pause'}
+              color="secondary"
+              onClick={() => {
+                setPaused(!paused);
+              }}
+            />
+          </div>
+        </>
+      ) : (
+        <Button
+          className="mt-5"
+          rounded={true}
+          size="large"
+          text={`${length} minute focus`}
+          color="primary"
+          onClick={() => {
+            startTimer();
+          }}
+        />
+      )}
     </>
   );
 }
-const Timeleft = ({ timeLeft }: { timeLeft: moment.Duration }) => {
+
+const Timeleft = ({
+  timeLeft,
+  lengthDuration,
+}: {
+  timeLeft: moment.Duration;
+  lengthDuration: moment.Duration;
+}) => {
+  const percentage =
+    (timeLeft.asMilliseconds() / lengthDuration.asMilliseconds()) * 100;
+
   return (
-    <p>
-      {timeLeft.minutes()}minutes {timeLeft.seconds()}seconds
-    </p>
+    <>
+      <div className="level">
+        <div className="level-item">
+          <progress
+            style={{ width: '90%' }}
+            className="progress is-medium"
+            value={percentage}
+            max="100"
+          >
+            {percentage.toString()}%
+          </progress>
+        </div>
+      </div>
+      <div className="level">
+        <div className="level-item">
+          <h5 className="is-size-4">
+            <strong>{timeLeft.minutes()}</strong>minutes {timeLeft.seconds()}
+            seconds
+          </h5>
+        </div>
+      </div>
+    </>
   );
 };

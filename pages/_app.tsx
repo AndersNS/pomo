@@ -47,6 +47,7 @@ export default function MyApp({ Component, pageProps }) {
         }
 
         wb.addEventListener('controlling', (_event) => {
+          console.log('Event controlling is triggered, reloading');
           window.location.reload();
         });
         setShowUpdateModal(true);

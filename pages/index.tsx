@@ -1,6 +1,13 @@
 import { Timer } from '../components';
+import { useState } from 'react';
 
 export default function Home() {
+  const [config, setConfig] = useState({
+    focusLength: 20,
+    shortPause: 5,
+    longPause: 10,
+  });
+
   return (
     <>
       <section className="hero is-medium is-primary">
@@ -12,7 +19,7 @@ export default function Home() {
       <div className="container mt-2">
         <main className="columns">
           <section className="column has-text-centered">
-            <Timer />
+            <Timer length={config.focusLength} />
           </section>
         </main>
       </div>
