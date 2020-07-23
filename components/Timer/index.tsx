@@ -77,6 +77,10 @@ export function Timer({ focusLength, onTimerEnd }: Props) {
               text={paused ? 'Unpause' : 'Pause'}
               color="secondary"
               onClick={() => {
+                if (paused) {
+                  // Update expires time after pause
+                  setExpires(moment().add(timeLeft));
+                }
                 setPaused(!paused);
               }}
             />
