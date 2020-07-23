@@ -25,19 +25,21 @@ export function Timer({ length }: Props) {
   const lengthDuration = moment.duration(length, 'minutes');
 
   useEffect(() => {
-    const timerInterval = setInterval(() => {
-      if (expires && !paused) {
+    let timerInterval: NodeJS.Timeout;
+    if (expires && !paused) {
+      timerInterval = setInterval(() => {
         if (expires.isSameOrBefore(moment())) {
           setTimeLeft(null);
         } else {
           const left = calculateTimeLeft(expires);
           setTimeLeft(left);
         }
-      }
-    }, 500);
-
+      }, 1000);
+    }
     return () => {
-      clearInterval(timerInterval);
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
     };
   }, [expires, paused]);
 
