@@ -15,6 +15,7 @@ const getWorkbox = () => {
 
 export default function MyApp({ Component, pageProps }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+
   useEffect(() => {
     const wb = getWorkbox();
     if (wb) {
@@ -96,6 +97,7 @@ export default function MyApp({ Component, pageProps }) {
 
     setShowUpdateModal(false);
   };
+
   return (
     <>
       <Modal isActive={showUpdateModal} onClose={onIgnoreUpdate}>
