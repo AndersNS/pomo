@@ -1,11 +1,12 @@
 import moment from 'moment';
 import { useState, useEffect } from 'react';
-import { Button } from '..';
+import { Button, Timeleft } from '..';
 import * as workerTimers from 'worker-timers';
+import { TimerConfig } from '../../models';
 
 interface Props {
-  focusLength: number;
   onTimerEnd: (message: string) => void;
+  timers: TimerConfig[];
 }
 
 const calculateTimeLeft = (expires: moment.Moment) => {
@@ -17,14 +18,12 @@ const calculateTimeLeft = (expires: moment.Moment) => {
   return duration;
 };
 
-export function Timer({ focusLength, onTimerEnd }: Props) {
+export function Timer({ timers, onTimerEnd }: Props) {
+  const [previousTimer, setPreviousTimer] = useState<TimerConfig>(null);
   const [timeLeft, setTimeLeft] = useState<moment.Duration>(null);
   const [expires, setExpires] = useState<moment.Moment>(null);
   const [paused, setPaused] = useState(false);
-
-  const timerStarted = timeLeft !== null;
-
-  const lengthDuration = moment.duration(focusLength, 'minutes');
+  const [currentTimer, setCurrentTimer] = useState<TimerConfig>(null);
 
   useEffect(() => {
     let timerInterval: number;
@@ -32,6 +31,9 @@ export function Timer({ focusLength, onTimerEnd }: Props) {
       timerInterval = workerTimers.setInterval(() => {
         if (timeLeft && expires.isSameOrBefore(moment())) {
           setTimeLeft(null);
+          setExpires(null);
+          setPreviousTimer(currentTimer);
+          setCurrentTimer(null);
           onTimerEnd('Timer ended');
         } else {
           const left = calculateTimeLeft(expires);
@@ -39,6 +41,7 @@ export function Timer({ focusLength, onTimerEnd }: Props) {
         }
       }, 1000);
     }
+
     return () => {
       if (timerInterval) {
         workerTimers.clearInterval(timerInterval);
@@ -46,32 +49,42 @@ export function Timer({ focusLength, onTimerEnd }: Props) {
     };
   }, [expires, paused]);
 
-  const startTimer = () => {
-    const expires = moment().add(lengthDuration).subtract(1, 'second');
+  const startTimer = (timer: TimerConfig) => {
+    const expires = moment().add(timer.length, 'minutes').subtract(1, 'second');
 
     setExpires(expires);
     setTimeLeft(calculateTimeLeft(expires));
+    setCurrentTimer(timer);
   };
+
+  const focusTimers = timers.filter((t) => t.type === 'focus');
+  const breakTimers = timers.filter((t) => t.type === 'break');
+
   return (
     <>
-      {timerStarted ? (
+      {previousTimer || currentTimer ? (
         <>
-          <Timeleft timeLeft={timeLeft} lengthDuration={lengthDuration} />
+          {timeLeft ? (
+            <Timeleft
+              timeLeft={timeLeft}
+              lengthDuration={moment.duration(currentTimer.length, 'minutes')}
+            />
+          ) : null}
           <div>
             <Button
-              width="60%"
+              width="80%"
               rounded={true}
               size="large"
-              text="Restart"
-              color="primary"
+              text={`Restart currrent`}
+              color={currentTimer.type === 'focus' ? 'secondary' : 'secondary'}
               onClick={() => {
-                startTimer();
+                startTimer(currentTimer);
               }}
             />
           </div>
           <div>
             <Button
-              width="60%"
+              width="80%"
               className="mt-2"
               rounded={true}
               size="large"
@@ -86,55 +99,38 @@ export function Timer({ focusLength, onTimerEnd }: Props) {
               }}
             />
           </div>
+          {breakTimers.map((t) => (
+            <div key={t.id} className="mt-2">
+              <Button
+                width="80%"
+                rounded={true}
+                size="large"
+                text={`${t.length} break`}
+                color="primary"
+                onClick={() => {
+                  startTimer(t);
+                }}
+              />
+            </div>
+          ))}
         </>
       ) : (
-        <Button
-          className="mt-5"
-          rounded={true}
-          size="large"
-          text={`${focusLength} minute focus`}
-          color="primary"
-          onClick={() => {
-            startTimer();
-          }}
-        />
+        <>
+          {focusTimers.map((t) => (
+            <Button
+              key={t.id}
+              className="mt-5"
+              rounded={true}
+              size="large"
+              text={`${t.length} minute focus`}
+              color="primary"
+              onClick={() => {
+                startTimer(t);
+              }}
+            />
+          ))}
+        </>
       )}
     </>
   );
 }
-
-const Timeleft = ({
-  timeLeft,
-  lengthDuration,
-}: {
-  timeLeft: moment.Duration;
-  lengthDuration: moment.Duration;
-}) => {
-  const percentage =
-    (timeLeft.asMilliseconds() / lengthDuration.asMilliseconds()) * 100;
-
-  return (
-    <>
-      <div className="level">
-        <div className="level-item">
-          <progress
-            style={{ width: '90%' }}
-            className="progress is-medium"
-            value={percentage}
-            max="100"
-          >
-            {percentage.toString()}%
-          </progress>
-        </div>
-      </div>
-      <div className="level">
-        <div className="level-item">
-          <h5 className="is-size-4">
-            <strong>{timeLeft.minutes()}</strong>minutes {timeLeft.seconds()}
-            seconds
-          </h5>
-        </div>
-      </div>
-    </>
-  );
-};

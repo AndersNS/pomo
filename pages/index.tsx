@@ -1,5 +1,6 @@
 import { Timer } from '../components';
 import { useState } from 'react';
+import { TimerConfig } from '../models';
 
 const showNotification = (message: string) => {
   console.log('Showing notification');
@@ -9,17 +10,25 @@ const showNotification = (message: string) => {
 };
 
 export default function Home() {
-  const [config, setConfig] = useState({
-    focusLength: 20,
-    shortPause: 5,
-    longPause: 10,
-  });
+  const [configs, setConfigs] = useState<TimerConfig[]>([
+    {
+      id: '1',
+      length: 20,
+      type: 'focus',
+    },
+    {
+      id: '2',
+      length: 5,
+      type: 'break',
+    },
+    { id: '3', length: 10, type: 'break' },
+  ]);
 
   return (
     <>
       <section className="hero is-medium is-primary">
         <div className="hero-body">
-          <h1 className="is-size-1 has-text-centered">Pomo!</h1>
+          <h1 className="is-size-1 has-text-centered has-text-white">Pomo!</h1>
         </div>
       </section>
 
@@ -27,7 +36,7 @@ export default function Home() {
         <main className="columns">
           <section className="column has-text-centered">
             <Timer
-              focusLength={config.focusLength}
+              timers={configs}
               onTimerEnd={(message) => showNotification(message)}
             />
           </section>

@@ -4,7 +4,8 @@
 @import url('https://fonts.googleapis.com/css?family=Oleo+Script:400|Poppins:400');
 
 $beige: #eff0eb;
-$red: #ff6113;
+$red: #b53940;
+$teal: #166b77;
 
 $size-1: 4.209rem;
 $size-2: 3.157rem;
@@ -19,7 +20,8 @@ $header-font: 'Oleo Script', sans-serif;
 // Set Bulma's global vaiables
 $body-family: 'Poppins', sans-serif;
 $body-line-height: 1.65;
-$primary: $red;
+$primary: $teal;
+$danger-dark: $red;
 
 html {
   font-size: 100%;
