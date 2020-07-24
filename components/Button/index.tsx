@@ -1,6 +1,6 @@
 interface Props {
   text: string;
-  color: 'primary' | 'secondary';
+  color: 'primary' | 'danger' | 'white';
   size?: 'large' | 'normal';
   width?: string;
   rounded?: boolean;

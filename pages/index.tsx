@@ -2,10 +2,13 @@ import { Timer } from '../components';
 import { useState } from 'react';
 import { TimerConfig } from '../models';
 
-const showNotification = (message: string) => {
+const showNotification = (timer: TimerConfig) => {
   console.log('Showing notification');
   navigator.serviceWorker.ready.then((reg) => {
-    reg.showNotification(message);
+    reg.showNotification(`${timer.type} ended, time to get going again!`, {
+      icon: '/icons/icon-72x72.png',
+      body: `Let's go`,
+    });
   });
 };
 

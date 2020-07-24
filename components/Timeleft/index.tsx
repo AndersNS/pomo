@@ -14,7 +14,7 @@ export const Timeleft = ({
         <div className="level-item">
           <progress
             style={{ width: '90%' }}
-            className="progress is-medium is-primary"
+            className="progress is-medium"
             value={percentage}
             max="100"
           >
