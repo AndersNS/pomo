@@ -27,8 +27,23 @@ export default function Home() {
   return (
     <>
       <section className="hero is-medium is-primary">
-        <div className="hero-body">
-          <h1 className="is-size-1 has-text-centered has-text-white">Pomo!</h1>
+        <div className="hero-body ">
+          <div className="columns is-centered is-vcentered is-mobile">
+            <div className="column is-narrow has-text-centered">
+              <figure
+                style={{ display: 'inline-block' }}
+                className="image is-64x64"
+              >
+                <img className="is-rounded" src="/icons/icon-128x128.png" />
+              </figure>
+              <h1
+                style={{ display: 'inline-block' }}
+                className="content is-size-1 has-text-white"
+              >
+                Pomo!
+              </h1>
+            </div>
+          </div>
         </div>
       </section>
 
