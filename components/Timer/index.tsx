@@ -30,7 +30,7 @@ export function Timer({ focusLength, onTimerEnd }: Props) {
     let timerInterval: number;
     if (expires && !paused) {
       timerInterval = workerTimers.setInterval(() => {
-        if (expires.isSameOrBefore(moment())) {
+        if (timeLeft && expires.isSameOrBefore(moment())) {
           setTimeLeft(null);
           onTimerEnd('Timer ended');
         } else {
