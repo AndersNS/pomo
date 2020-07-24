@@ -11,8 +11,8 @@ icon designer: Alessandro Suraci
 icon designer link: /alessandro.suraci
         
 
-fontColor: {"hex":"#FFFFFF"}
-bgColor: {"hex":"#FF6113"}
-iconColor: {"hex":"#FFFFFF"}
+fontColor: {"hex":"#B53940"}
+bgColor: {"hex":"#166B77"}
+iconColor: {"hex":"#B53940"}
 
       
