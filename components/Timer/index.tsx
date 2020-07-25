@@ -9,6 +9,8 @@ interface Props {
   timers: TimerConfig[];
 }
 
+const timerColor = (type: string) => (type === 'focus' ? 'primary' : 'danger');
+
 const calculateTimeLeft = (expires: moment.Moment) => {
   const now = moment();
 
@@ -59,14 +61,13 @@ export function Timer({ timers, onTimerEnd }: Props) {
 
   const focusTimers = timers.filter((t) => t.type === 'focus');
   const breakTimers = timers.filter((t) => t.type === 'break');
-  const buttonColor = (type: string) =>
-    type === 'focus' ? 'primary' : 'danger';
   return (
     <>
       {previousTimer || currentTimer ? (
         <>
           {timeLeft ? (
             <Timeleft
+              color={timerColor(currentTimer.type)}
               timeLeft={timeLeft}
               lengthDuration={moment.duration(currentTimer.length, 'minutes')}
             />
@@ -79,7 +80,7 @@ export function Timer({ timers, onTimerEnd }: Props) {
                     rounded={true}
                     size="large"
                     text={`${t.length} minute break`}
-                    color={buttonColor(t.type)}
+                    color={timerColor(t.type)}
                     onClick={() => {
                       startTimer(t);
                     }}
@@ -93,7 +94,7 @@ export function Timer({ timers, onTimerEnd }: Props) {
                     rounded={true}
                     size="large"
                     text={`${t.length} minute focus`}
-                    color={buttonColor(t.type)}
+                    color={timerColor(t.type)}
                     onClick={() => {
                       startTimer(t);
                     }}
@@ -122,7 +123,7 @@ export function Timer({ timers, onTimerEnd }: Props) {
               rounded={true}
               size="large"
               text={`Restart currrent`}
-              color={buttonColor(currentTimer.type)}
+              color={timerColor(currentTimer.type)}
               onClick={() => {
                 startTimer(currentTimer);
               }}
@@ -138,7 +139,7 @@ export function Timer({ timers, onTimerEnd }: Props) {
               rounded={true}
               size="large"
               text={`${t.length} minute focus`}
-              color={buttonColor(t.type)}
+              color={timerColor(t.type)}
               onClick={() => {
                 startTimer(t);
               }}

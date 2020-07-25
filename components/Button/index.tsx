@@ -1,6 +1,8 @@
+import { Color, getColorClass } from '../../utils';
+
 interface Props {
   text: string;
-  color: 'primary' | 'danger' | 'white';
+  color: Color;
   size?: 'large' | 'normal';
   width?: string;
   rounded?: boolean;
@@ -9,7 +11,7 @@ interface Props {
 }
 export function Button({
   text,
-  color: style,
+  color,
   size,
   rounded,
   onClick,
@@ -22,7 +24,7 @@ export function Button({
   return (
     <button
       style={{ ...w }}
-      className={`button is-${style} is-${s} ${r} ${className}`}
+      className={`button ${getColorClass(color)} is-${s} ${r} ${className}`}
       onClick={() => onClick()}
     >
       {text}

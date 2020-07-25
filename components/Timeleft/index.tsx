@@ -1,9 +1,13 @@
+import { getColorClass, Color } from '../../utils';
+
 export const Timeleft = ({
   timeLeft,
   lengthDuration,
+  color,
 }: {
   timeLeft: moment.Duration;
   lengthDuration: moment.Duration;
+  color: Color;
 }) => {
   const percentage =
     (timeLeft.asMilliseconds() / lengthDuration.asMilliseconds()) * 100;
@@ -14,7 +18,7 @@ export const Timeleft = ({
         <div className="level-item">
           <progress
             style={{ width: '90%' }}
-            className="progress is-medium"
+            className={`progress is-medium ${getColorClass(color)}`}
             value={percentage}
             max="100"
           >
