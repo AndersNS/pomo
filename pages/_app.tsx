@@ -102,7 +102,9 @@ export default function MyApp({ Component, pageProps }) {
     <>
       <Modal isActive={showUpdateModal} onClose={onIgnoreUpdate}>
         <div className="box is-4by3">
-          <p>A new update for Pomo! is available! Do you want to update now?</p>
+          <p className="has-text-black">
+            A new update for Pomo! is available! Do you want to update now?
+          </p>
           <div className="has-text-centered mt-4">
             <Button
               text="Update now!"
@@ -112,9 +114,9 @@ export default function MyApp({ Component, pageProps }) {
               }}
             />
             <Button
-              className="ml-2"
+              className="ml-2 is-outlined has-text-black"
               text="Ignore"
-              color="white"
+              color="danger"
               onClick={() => {
                 onIgnoreUpdate();
               }}
