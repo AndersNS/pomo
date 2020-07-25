@@ -29,8 +29,8 @@ export const Timeleft = ({
       <div className="level">
         <div className="level-item">
           <h5 className="is-size-4">
-            <strong>{timeLeft.minutes()}</strong>minutes {timeLeft.seconds()}
-            seconds
+            <strong>{timeLeft.minutes()}</strong>minutes{' '}
+            <strong>{timeLeft.seconds()}</strong> seconds
           </h5>
         </div>
       </div>

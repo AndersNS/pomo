@@ -4,8 +4,12 @@
 @import url('https://fonts.googleapis.com/css?family=Oleo+Script:400|Poppins:400');
 
 $beige: #eff0eb;
-$red: #b53940;
+$tomato: #b53940;
 $teal: #166b77;
+$purple: #5d3b58;
+
+$text-color: hsl(0, 0%, 86%);
+$white: hsl(0, 0%, 100%);
 
 $size-1: 4.209rem;
 $size-2: 3.157rem;
@@ -21,14 +25,16 @@ $header-font: 'Oleo Script', sans-serif;
 $body-family: 'Poppins', sans-serif;
 $body-line-height: 1.65;
 $primary: $teal;
-$danger-dark: $red;
+$body-background-color: $tomato;
+$info: $purple;
+$text: $text-color;
+$text-strong: $white;
 
 html {
   font-size: 100%;
 } /*16px*/
 
 body {
-  background-color: $beige;
   font-family: $body-family;
 }
 

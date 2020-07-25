@@ -9,7 +9,7 @@ interface Props {
   timers: TimerConfig[];
 }
 
-const timerColor = (type: string) => (type === 'focus' ? 'primary' : 'danger');
+const timerColor = (type: string) => (type === 'focus' ? 'primary' : 'info');
 
 const calculateTimeLeft = (expires: moment.Moment) => {
   const now = moment();
@@ -57,7 +57,6 @@ export function Timer({ timers, onTimerEnd }: Props) {
     setExpires(expires);
     setTimeLeft(calculateTimeLeft(expires));
     setCurrentTimer(timer);
-    onTimerEnd(timer);
   };
 
   const focusTimers = timers.filter((t) => t.type === 'focus');
