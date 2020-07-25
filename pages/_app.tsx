@@ -114,7 +114,7 @@ export default function MyApp({ Component, pageProps }) {
             <Button
               className="ml-2"
               text="Ignore"
-              color="secondary"
+              color="white"
               onClick={() => {
                 onIgnoreUpdate();
               }}

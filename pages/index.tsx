@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { TimerConfig } from '../models';
 
 const showNotification = (timer: TimerConfig) => {
-  console.log('Showing notification');
   navigator.serviceWorker.ready.then((reg) => {
     reg.showNotification(`${timer.type} ended, time to get going again!`, {
       icon: '/icons/icon-72x72.png',
