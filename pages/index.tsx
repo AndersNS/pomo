@@ -54,7 +54,7 @@ export default function Home() {
                 style={{ display: 'inline-block' }}
                 className="image is-64x64"
               >
-                <img className="is-rounded" src="/icons/icon-128x128.png" />
+                <img className="is-rounded" src="/icons/icon-72x72.png" />
               </figure>
               <h1
                 style={{ display: 'inline-block' }}

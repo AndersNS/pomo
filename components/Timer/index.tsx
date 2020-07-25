@@ -65,7 +65,7 @@ export function Timer({ timers, onTimerEnd }: Props) {
     <>
       {previousTimer || currentTimer ? (
         <>
-          {timeLeft ? (
+          {timeLeft && currentTimer ? (
             <Timeleft
               color={timerColor(currentTimer.type)}
               timeLeft={timeLeft}
