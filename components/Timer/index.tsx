@@ -59,53 +59,38 @@ export function Timer({ timers, onTimerEnd }: Props) {
     setCurrentTimer(timer);
   };
 
-  const focusTimers = timers.filter((t) => t.type === 'focus');
-  const breakTimers = timers.filter((t) => t.type === 'break');
+  const focusTimers = timers
+    .filter((t) => t.type === 'focus')
+    .sort((a, b) => a.length - b.length);
+
+  const breakTimers = timers
+    .filter((t) => t.type === 'break')
+    .sort((a, b) => a.length - b.length);
+
   return (
     <>
       {previousTimer || currentTimer ? (
         <>
           {timeLeft && currentTimer ? (
-            <Timeleft
-              color={timerColor(currentTimer.type)}
-              timeLeft={timeLeft}
-              lengthDuration={moment.duration(currentTimer.length, 'minutes')}
-            />
+            <>
+              <div className="mt-3">
+                <Timeleft
+                  color={timerColor(currentTimer.type)}
+                  timeLeft={timeLeft}
+                  lengthDuration={moment.duration(
+                    currentTimer.length,
+                    'minutes',
+                  )}
+                />
+              </div>
+            </>
           ) : null}
-          {currentTimer.type === 'focus'
-            ? breakTimers.map((t) => (
-                <div key={t.id} className="mt-2">
-                  <Button
-                    width="80%"
-                    rounded={true}
-                    size="large"
-                    text={`${t.length} minute break`}
-                    color={timerColor(t.type)}
-                    onClick={() => {
-                      startTimer(t);
-                    }}
-                  />
-                </div>
-              ))
-            : focusTimers.map((t) => (
-                <div key={t.id} className="mt-2">
-                  <Button
-                    width="80%"
-                    rounded={true}
-                    size="large"
-                    text={`${t.length} minute focus`}
-                    color={timerColor(t.type)}
-                    onClick={() => {
-                      startTimer(t);
-                    }}
-                  />
-                </div>
-              ))}
-          <div className="mt-2">
+
+          <div className="mt-3">
             <Button
-              width="80%"
               rounded={true}
-              size="large"
+              width="80%"
+              size="normal"
               text={paused ? 'Unpause' : 'Pause'}
               color="white"
               onClick={() => {
@@ -117,18 +102,34 @@ export function Timer({ timers, onTimerEnd }: Props) {
               }}
             />
           </div>
-          <div className="mt-2">
-            <Button
-              width="80%"
-              rounded={true}
-              size="large"
-              text={`Restart currrent`}
-              color={timerColor(currentTimer.type)}
-              onClick={() => {
-                startTimer(currentTimer);
-              }}
-            />
-          </div>
+          {focusTimers.map((t) => (
+            <div key={t.id} className="mt-6">
+              <Button
+                width="80%"
+                rounded={true}
+                size="large"
+                text={`${t.length} minute focus`}
+                color={timerColor(t.type)}
+                onClick={() => {
+                  startTimer(t);
+                }}
+              />
+            </div>
+          ))}
+          {breakTimers.map((t) => (
+            <div key={t.id} className="mt-2">
+              <Button
+                width="80%"
+                rounded={true}
+                size="large"
+                text={`${t.length} minute break`}
+                color={timerColor(t.type)}
+                onClick={() => {
+                  startTimer(t);
+                }}
+              />
+            </div>
+          ))}
         </>
       ) : (
         <>

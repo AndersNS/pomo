@@ -26,14 +26,10 @@ export const Timeleft = ({
           </progress>
         </div>
       </div>
-      <div className="level">
-        <div className="level-item">
-          <h5 className="is-size-4">
-            <strong>{timeLeft.minutes()}</strong>minutes{' '}
-            <strong>{timeLeft.seconds()}</strong> seconds
-          </h5>
-        </div>
-      </div>
+      <h4 className="is-size-4 mt-1">
+        <strong>{timeLeft.minutes()}</strong>minutes{' '}
+        <strong>{timeLeft.seconds()}</strong> seconds
+      </h4>
     </>
   );
 };
