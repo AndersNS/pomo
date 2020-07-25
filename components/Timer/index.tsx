@@ -73,7 +73,7 @@ export function Timer({ timers, onTimerEnd }: Props) {
         <>
           {timeLeft && currentTimer ? (
             <>
-              <div className="mt-3">
+              <div className="mt-3 pb-3">
                 <Timeleft
                   color={timerColor(currentTimer.type)}
                   timeLeft={timeLeft}
@@ -82,28 +82,28 @@ export function Timer({ timers, onTimerEnd }: Props) {
                     'minutes',
                   )}
                 />
+                <div className="mt-3 ">
+                  <Button
+                    rounded={true}
+                    width="80%"
+                    size="normal"
+                    text={paused ? 'Unpause' : 'Pause'}
+                    color="white"
+                    onClick={() => {
+                      if (paused) {
+                        // Update expires time after pause
+                        setExpires(moment().add(timeLeft));
+                      }
+                      setPaused(!paused);
+                    }}
+                  />
+                </div>
               </div>
             </>
           ) : null}
 
-          <div className="mt-3">
-            <Button
-              rounded={true}
-              width="80%"
-              size="normal"
-              text={paused ? 'Unpause' : 'Pause'}
-              color="white"
-              onClick={() => {
-                if (paused) {
-                  // Update expires time after pause
-                  setExpires(moment().add(timeLeft));
-                }
-                setPaused(!paused);
-              }}
-            />
-          </div>
           {focusTimers.map((t) => (
-            <div key={t.id} className="mt-6">
+            <div key={t.id} className="mt-3">
               <Button
                 width="80%"
                 rounded={true}
