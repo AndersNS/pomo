@@ -2,11 +2,29 @@ import { Timer } from '../components';
 import { useState } from 'react';
 import { TimerConfig } from '../models';
 
+const getMessageBody = (timer: TimerConfig) => {
+  if (timer.type === 'focus') {
+    return 'Well done!! Consider taking a short break before starting on a new session!';
+  }
+  if (timer.type === 'break') {
+    return "Hope you had a nice break! Now, let's get back to it. ";
+  }
+};
+
+const getMessageTitle = (timer: TimerConfig) => {
+  if (timer.type === 'focus') {
+    return `Your ${timer.length} minute focus session is over!`;
+  }
+  if (timer.type === 'break') {
+    return `${timer.length} minute break is over!`;
+  }
+};
+
 const showNotification = (timer: TimerConfig) => {
   navigator.serviceWorker.ready.then((reg) => {
-    reg.showNotification(`${timer.type} ended, time to get going again!`, {
-      icon: '/icons/icon-72x72.png',
-      body: `Let's go`,
+    reg.showNotification(getMessageTitle(timer), {
+      icon: '/icons/icon-512x512-t.png',
+      body: getMessageBody(timer),
     });
   });
 };

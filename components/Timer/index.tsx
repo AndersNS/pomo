@@ -57,6 +57,7 @@ export function Timer({ timers, onTimerEnd }: Props) {
     setExpires(expires);
     setTimeLeft(calculateTimeLeft(expires));
     setCurrentTimer(timer);
+    onTimerEnd(timer);
   };
 
   const focusTimers = timers.filter((t) => t.type === 'focus');
