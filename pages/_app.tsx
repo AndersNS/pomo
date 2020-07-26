@@ -15,6 +15,7 @@ const getWorkbox = () => {
 
 export default function MyApp({ Component, pageProps }) {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [updateClicked, setUpdateClicked] = useState(false);
 
   useEffect(() => {
     const wb = getWorkbox();
@@ -108,8 +109,10 @@ export default function MyApp({ Component, pageProps }) {
           <div className="has-text-centered mt-4">
             <Button
               text="Update now!"
+              className={updateClicked ? 'is-loading' : ''}
               color="primary"
               onClick={() => {
+                setUpdateClicked(true);
                 onUpdate();
               }}
             />
