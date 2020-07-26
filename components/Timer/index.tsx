@@ -51,6 +51,20 @@ export function Timer({ timers, onTimerEnd }: Props) {
     };
   }, [expires, paused]);
 
+  useEffect(() => {
+    navigator.serviceWorker.onmessage = (ev) => {
+      if (ev && ev.data && ev.data.type === 'START_TIMER') {
+        const { timerType, timerLength } = ev.data;
+        const timer = timers.find(
+          (timerConfig) =>
+            timerConfig.length === timerLength &&
+            timerConfig.type === timerType,
+        );
+        startTimer(timer);
+      }
+    };
+  });
+
   const startTimer = (timer: TimerConfig) => {
     const expires = moment().add(timer.length, 'minutes').subtract(1, 'second');
 

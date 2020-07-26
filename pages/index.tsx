@@ -20,11 +20,26 @@ const getMessageTitle = (timer: TimerConfig) => {
   }
 };
 
-const showNotification = (timer: TimerConfig) => {
+const getActions = (
+  timer: TimerConfig,
+  configs: TimerConfig[],
+): NotificationAction[] => {
+  return configs
+    .filter((c) => c.type !== timer.type)
+    .map((t) => {
+      return {
+        action: `${t.type}|${t.length}`,
+        title: `${t.length} minute ${t.type}`,
+      };
+    });
+};
+
+const showNotification = (timer: TimerConfig, configs: TimerConfig[]) => {
   navigator.serviceWorker.ready.then((reg) => {
     reg.showNotification(getMessageTitle(timer), {
       icon: '/icons/icon-512x512-t.png',
       body: getMessageBody(timer),
+      actions: getActions(timer, configs),
     });
   });
 };
@@ -72,7 +87,7 @@ export default function Home() {
           <section className="column has-text-centered">
             <Timer
               timers={configs}
-              onTimerEnd={(message) => showNotification(message)}
+              onTimerEnd={(timer) => showNotification(timer, configs)}
             />
           </section>
         </main>
