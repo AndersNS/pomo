@@ -20,36 +20,13 @@ export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const wb = getWorkbox();
     if (wb) {
-      // add event listeners to handle any of PWA lifecycle event
-      // https://developers.google.com/web/tools/workbox/reference-docs/latest/module-workbox-window.Workbox#events
-      wb.addEventListener('installed', (event) => {
-        console.log(`Event ${event.type} is triggered.`);
-        console.log(event);
-      });
-
-      wb.addEventListener('controlling', (event) => {
-        console.log(`Event ${event.type} is triggered.`);
-        console.log(event);
-      });
-
-      wb.addEventListener('activated', (event) => {
-        console.log(`Event ${event.type} is triggered.`);
-        console.log(event);
-      });
-
-      // A common UX pattern for progressive web apps is to show a banner when a service worker has updated and waiting to install.
-      // NOTE: MUST set skipWaiting to false in next.config.js pwa object
-      // https://developers.google.com/web/tools/workbox/guides/advanced-recipes#offer_a_page_reload_for_users
       const promptNewVersionAvailable = (_event: any) => {
-        // `event.wasWaitingBeforeRegister` will be false if this is the first time the updated service worker is waiting.
-        // When `event.wasWaitingBeforeRegister` is true, a previously updated service worker is still waiting.
-        // You may want to customize the UI prompt accordingly.
+        // Skip the install
         if (process.env.NODE_ENV !== 'production') {
           return;
         }
 
         wb.addEventListener('controlling', (_event) => {
-          console.log('Event controlling is triggered, reloading');
           window.location.reload();
         });
         setShowUpdateModal(true);
@@ -65,16 +42,7 @@ export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if ('Notification' in window) {
       Notification.requestPermission((res) => {
-        switch (res) {
-          case 'granted':
-            console.log('Granted!');
-            break;
-          case 'denied':
-            console.log('Notification access denied');
-            break;
-          default:
-            console.log('Ignored notification access request');
-        }
+        console.log('Notification permission request result', res);
       });
     }
   });
@@ -82,7 +50,6 @@ export default function MyApp({ Component, pageProps }) {
   const onUpdate = () => {
     const wb = getWorkbox();
     if (!wb) {
-      console.log('Could not get workbox in onUpdate');
       return;
     }
 
