@@ -1,6 +1,4 @@
 'use strict';
-/* tslint:disable */
-/* eslint:disable */
 
 self.addEventListener('notificationclick', function (event) {
   console.log('On notification click: ', event);
