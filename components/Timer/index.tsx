@@ -52,6 +52,7 @@ export function Timer({ timers, onTimerEnd }: Props) {
   }, [expires, paused]);
 
   useEffect(() => {
+    // Fired when the user clicks an action in the notification
     navigator.serviceWorker.onmessage = (ev) => {
       if (ev && ev.data && ev.data.type === 'START_TIMER') {
         const { timerType, timerLength } = ev.data;
