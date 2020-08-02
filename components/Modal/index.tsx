@@ -12,7 +12,7 @@ export function Modal({ isActive, children, onClose }: Props) {
       <button
         className="modal-close is-large"
         aria-label="close"
-        onClick={onClose}
+        onClick={() => onClose()}
       ></button>
     </div>
   );
