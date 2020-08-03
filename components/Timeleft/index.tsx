@@ -1,4 +1,5 @@
 import { getColorClass, Color } from '../../utils';
+import Head from 'next/head';
 
 export const Timeleft = ({
   timeLeft,
@@ -14,6 +15,11 @@ export const Timeleft = ({
 
   return (
     <>
+      <Head>
+        <title>
+          {timeLeft.minutes()}:{timeLeft.seconds()}
+        </title>
+      </Head>
       <div className="level">
         <div className="level-item">
           <progress
