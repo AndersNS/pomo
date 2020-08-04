@@ -31,11 +31,12 @@ export function Timer({ timers, onTimerEnd }: Props) {
     let timerInterval: number;
     if (expires && !paused) {
       timerInterval = workerTimers.setInterval(() => {
-        if (timeLeft && expires.isSameOrBefore(moment())) {
+        if (expires.isSameOrBefore(new Date())) {
           setTimeLeft(null);
           setExpires(null);
           setPreviousTimer(currentTimer);
           setCurrentTimer(null);
+
           onTimerEnd(currentTimer);
         } else {
           const left = calculateTimeLeft(expires);
