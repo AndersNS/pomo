@@ -17,7 +17,8 @@ export const Timeleft = ({
     <>
       <Head>
         <title>
-          {timeLeft.minutes()}:{timeLeft.seconds()}
+          {timeLeft.minutes().toString().padStart(2, '0')}:
+          {timeLeft.seconds().toString().padStart(2, '0')}
         </title>
       </Head>
       <div className="level">
