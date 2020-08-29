@@ -13,10 +13,12 @@ This is a simple backend-less pomodoro-tier. It is implemented with Next.js and 
 
 ## Screenshots
 
-![break timer screenshot](screenshots/break_timer.png?raw=true = 200x)
-![focus timer screenshot](screenshots/focus_timer.png?raw=true = 200x)
+<p>
+  <img src="screenshots/break_timer.png?raw=true" width="200px" alt="break timer screenshot" />
+  <img src="screenshots/focus_timer.png?raw=true" width="200px" alt="focus timer screenshot" />
+</p>
 
-![notification screenshot](screenshots/notification.png?raw=true = 200x)
+<img src="screenshots/notification.png?raw=true" width="200px" alt="notification screenshot" />
 
 # How to run
 
