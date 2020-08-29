@@ -13,10 +13,10 @@ This is a simple backend-less pomodoro-tier. It is implemented with Next.js and 
 
 ## Screenshots
 
-![break timer screenshot](https://github.com/AndersNS/pomo/blob/master/screenshots/break_timer.png?raw=true =200x)
-![focus timer screenshot](https://github.com/AndersNS/pomo/blob/master/screenshots/focus_timer.png?raw=true =200x)
+![break timer screenshot](screenshots/break_timer.png?raw=true = 200x)
+![focus timer screenshot](screenshots/focus_timer.png?raw=true = 200x)
 
-![notification screenshot](https://github.com/AndersNS/pomo/blob/master/screenshots/notification.png?raw=true =200x)
+![notification screenshot](screenshots/notification.png?raw=true = 200x)
 
 # How to run
 
