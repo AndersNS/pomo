@@ -13,10 +13,10 @@ This is a simple backend-less pomodoro-tier. It is implemented with Next.js and 
 
 ## Screenshots
 
-![](./screenshots/break_timer.png =200x)
-![](./screenshots/focus_timer.png =200x)
+![](/screenshots/break_timer.png?raw=true =200x)
+![](/screenshots/focus_timer.png?raw=true =200x)
 
-![](./screenshots/notification.png =200x)
+![](/screenshots/notification.png?raw=true =200x)
 
 # How to run
 
